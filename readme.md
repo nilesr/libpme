@@ -88,3 +88,43 @@ The following color types are defined
     PALETTE = 3
     GREYSCALE_WITH_ALPHA = 4
     RGB_WITH_ALPHA = 6
+
+## Some examples
+In this example, we will write draw a red circle in a new 100x100 file
+
+	img = libpme.PME();
+	img.width = img.height = 100
+	img.color_type = libpme.color_types.RGB
+	newdata = b''
+	for y in range(100):
+		newdata += b'\x00' # to indicate that we are writing raw pixel data, not differences
+		for x in range(100):
+			if (x-50)**2 + (y-50)**2 < 50**2: # If we're within 50 pixels of the center of the image
+				newdata += b'\xFF\x00\x00' # red
+			else:
+				newdata += b'\xFF\xFF\xFF' # white
+	img.write_raw_idat_data(img.compress(newdata))
+	img.save("output.png")
+
+The output should look something like this:
+![](http://i.imgur.com/uEToHvS.png)
+
+In this example, we will draw a red sine wave on a new 100x100 file
+
+	import math
+	img = libpme.PME();
+	img.width = img.height = 100
+	img.color_type = libpme.color_types.RGB
+	newdata = b''
+	for y in range(100):
+		newdata += b'\x00'
+		for x in range(100):
+			if abs(math.sin(float(x) / 5) * 50 + 50 - y) < 5:
+				newdata += b'\xFF\x00\x00' # red
+			else:
+				newdata += b'\xFF\xFF\xFF' # white
+	img.write_raw_idat_data(img.compress(newdata))
+	img.save("output2.png")
+
+The output should look something like this:
+![](http://i.imgur.com/vfa6lOR.png)
