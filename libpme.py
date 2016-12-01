@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # PNG Metadata Editor
 # Niles Rogoff 2016
-import struct, zlib, copy
+import zlib, copy
+class color_types(object):
+    GREYSCALE = 0
+    RGB = 2
+    PALETTE = 3
+    GREYSCALE_WITH_ALPHA = 4
+    RGB_WITH_ALPHA = 6
 class PME(object):
-	class color_types(object):
-		GREYSCALE = 0
-		RGB = 2
-		PALETTE = 3
-		GREYSCALE_WITH_ALPHA = 4
-		RGB_WITH_ALPHA = 6
 	def _int(self, binary):
 		return int.from_bytes(binary, byteorder="big")
 	def _bytes(self, integer, length):
@@ -40,7 +40,7 @@ class PME(object):
 			]
 			self.width = self.height = 0 # the user can decide
 			self.bit_depth = 8 # a sane default
-			self.color_type = self.color_types.RGB_WITH_ALPHA
+			self.color_type = color_types.RGB_WITH_ALPHA
 			self.compression_method = 0
 			self.filter_method = 0 # The only one as far as I know
 			self.interlace_method = 0
