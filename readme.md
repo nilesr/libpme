@@ -79,3 +79,12 @@ Deletes all IDAT chunks except the first one, then sets that chunk's data to the
 
 ## Indexes
 Any function that takes an index can be passed either the numerical index of the chunk (so 0 for IDAT, 1 for the second chunk, -1 for the last chunk, etc..), or a list that exists in `img.chunks`, or a 4-length bytes object that is equal to the label of one of the chunks in the image. If a chunk with that label appears more than once, the first one will be used
+
+## Color types
+The following color types are defined
+
+    GREYSCALE = 0
+    RGB = 2
+    PALETTE = 3
+    GREYSCALE_WITH_ALPHA = 4
+    RGB_WITH_ALPHA = 6
