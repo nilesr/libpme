@@ -1,1 +1,6 @@
 __pycache__
+build
+dist
+*.pyc
+*.pyo
+libPME.egg-info
