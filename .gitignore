@@ -3,4 +3,4 @@ build
 dist
 *.pyc
 *.pyo
-libPME.egg-info
+*.egg-info
