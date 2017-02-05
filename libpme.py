@@ -3,34 +3,39 @@
 # Niles Rogoff 2016
 import zlib, copy
 class color_types(object):
-    GREYSCALE = 0
-    RGB = 2
-    PALETTE = 3
-    GREYSCALE_WITH_ALPHA = 4
-    RGB_WITH_ALPHA = 6
+	GREYSCALE = 0
+	RGB = 2
+	PALETTE = 3
+	GREYSCALE_WITH_ALPHA = 4
+	RGB_WITH_ALPHA = 6
 class PME(object):
+	def _assert(self, statement):
+		if not self._damaged:
+			assert(statement)
 	def _int(self, binary):
 		return int.from_bytes(binary, byteorder="big")
 	def _bytes(self, integer, length):
 		return integer.to_bytes(length, "big")
-	def __init__(self, filename=False):
+	def __init__(self, filename=False, damaged=False):
+		self._damaged = damaged
 		self._init = False
 		self._magic_number = b'\x89PNG\r\n\x1a\n'
 		self.filename = filename
 		self.chunks = []
 		if filename:
 			f = open(self.filename, "rb")
-			assert(f.read(8) == self._magic_number)
+			self._assert(f.read(8) == self._magic_number)
 			while True:
 				length = f.read(4)
 				label = f.read(4)
 				data = f.read(self._int(length))
 				crc = f.read(4)
-				self._verify_crc(label, data, crc)
+				if not self._damaged:
+					self._verify_crc(label, data, crc)
 				self.chunks.append([length, label, data, crc])
 				if label == b"IEND":
 					break
-			assert(self.chunks[0][1] == b"IHDR")
+			self._assert(self.chunks[0][1] == b"IHDR")
 			self.recalculate_properties()
 		else:
 			self.chunks = [

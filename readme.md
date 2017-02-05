@@ -128,3 +128,8 @@ In this example, we will draw a red sine wave on a new 100x100 file
 
 The output should look something like this:
 ![](http://i.imgur.com/vfa6lOR.png)
+
+## Changelog
+
+### 1.1
+Added the damaged argument to the constructor. If damaged is set to true, it will allow you to open potentially damaged png files, which maybe don't have IDAT as the first chunk, or have invalid CRCs
