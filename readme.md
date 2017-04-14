@@ -131,5 +131,8 @@ The output should look something like this:
 
 ## Changelog
 
+### 1.2
+You can now do `libpme.compress` instead of having to write `libpme.PME.compress`
+
 ### 1.1
 Added the damaged argument to the constructor. If damaged is set to true, it will allow you to open potentially damaged png files, which maybe don't have IDAT as the first chunk, or have invalid CRCs

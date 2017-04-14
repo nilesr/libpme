@@ -130,3 +130,5 @@ class PME(object):
 				self.recalculate_length(index)
 				return True
 		return False
+decompress = zlib.decompress
+compress = zlib.compress

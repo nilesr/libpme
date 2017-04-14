@@ -1,7 +1,7 @@
 #from distutils.core import setup
 from setuptools import setup
 setup(name='libpme',
-      version='1.1',
+      version='1.2',
 	  description="PNG metadata editor library",
 	  author="Niles Rogoff",
 	  author_email="me@niles.xyz",
