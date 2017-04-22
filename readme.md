@@ -4,9 +4,9 @@ This library was written for a competition between me and Ethan, who was going t
 
 You can initialize a PME instance by passing it a filename to an already existing file, or no arguments, like this:
 
-    img = new libpme.PME("test.png");
+	img = new libpme.PME("test.png");
 	# or
-    img = new libpme.PME();
+	img = new libpme.PME();
 
 If the file is not valid, it will throw an exception
 
@@ -29,7 +29,7 @@ Here are the methods you can call on an image, in no particular order
 This simply recalculates the seven properties listed above from the data currently in the IHDR chunk. 
 
 	img.height = 400
-	img.chunks[0][2] = b'\x00\x00\x00\x00\x00\x00\x00\x00\x08\x06\x00\x00\x00'
+	img.chunks[0][2] = b'\x00\x00\x00\x00\x00\x00\x00\x00\x08\x06\x00\x00\x00' 
 	# img.height remains unchanged at 400
 	img.recalculate_properties()
 	# img.height is now set to 0
@@ -48,7 +48,7 @@ This takes an index of a chunk (see below) and overwrites the crc in that chunk 
 
 	img.color_type = libpme.color_types.RGB
 	img.width = img.height = 1
-	img.chunks[1][2] = b'\x00\xFF\x00\x00' # a 1x1 red image, assuming that the second chunk is the only IDAT chunk
+	img.chunks[1][2] = img.compress(b'\x00\xFF\x00\x00') # a 1x1 red image, assuming that the second chunk is the only IDAT chunk
 	img.recalculate_crc(1) # img.chunks[1][3] is now set to b'T\xbb\xd3\xea'
 
 ### `recalculate_length`
@@ -69,7 +69,7 @@ This saves the image to the disk, overwriting a file if it was already there. If
 Concatenates the (still compressed) data of each IDAT chunk, then returns it.
 
 	img.width = 2
-	img.chunks.insert(2, [b'\x00\x00\x00\x03', b'IDAT', img.compress(b'\x00\xFF\x00'), b'j\xee\xb3\xd0']) # making it a 2x1 image with a red and a green pixel
+	img.chunks.insert(2, [b'\x00\x00\x00\x03', b'IDAT', img.compress(b'\x00\xFF\x00'), b'j\xee\xb3\xd0']) # reusing the old data, now it's a 2x1 image with a red and a green pixel
 	img.decompress(img.get_concatenated_idat_data()) # returns '\x00\xFF\x00\x00\x00\xFF\x00';
 
 ### `write_raw_idat_data`
@@ -83,11 +83,11 @@ Any function that takes an index can be passed either the numerical index of the
 ## Color types
 The following color types are defined
 
-    GREYSCALE = 0
-    RGB = 2
-    PALETTE = 3
-    GREYSCALE_WITH_ALPHA = 4
-    RGB_WITH_ALPHA = 6
+	GREYSCALE = 0
+	RGB = 2
+	PALETTE = 3
+	GREYSCALE_WITH_ALPHA = 4
+	RGB_WITH_ALPHA = 6
 
 ## Some examples
 In this example, we will write draw a red circle in a new 100x100 file
